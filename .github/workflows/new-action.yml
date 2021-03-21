@@ -30,11 +30,11 @@ jobs:
       - name: Comment PR
         env:
             GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        if: ${{env.BUILD_DOCS}} == 'true':
+        if: env.BUILD_DOCS == 'true':
         with:
           msg: "Your comment has AppajiC word"
           check_for_duplicate_msg: false
-        if: ${{env.BUILD_DOCS}} != 'true':
+        if: env.BUILD_DOCS != 'true':
         with:
           msg: "Your comment doesn't have AppajiC word"
           check_for_duplicate_msg: false
