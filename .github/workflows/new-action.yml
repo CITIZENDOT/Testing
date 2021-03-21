@@ -17,14 +17,21 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      - run: "echo Found it!"
-        if: steps.check.outputs.triggered == 'true'
-      - uses: unsplash/comment-on-pr@master
-        env:
-            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  
+  after-deploy:
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: steps.check.outputs.triggered == 'true'
+    steps:
+      - name: True Comment
+        uses: unsplash/comment-on-pr@master
         with:
-          - if : steps.check.outputs.triggered == 'true'
           msg: "Trigger Present"
-          - if : steps.check.outputs.triggered != 'true'
-          msg: "Trigger Absent"
-          check_for_duplicate_msg: false  # OPTIONAL 
+          check_for_duplicate_msg: false
+    if: steps.check.outputs.triggered != 'true'
+      steps:
+        - name: False Comment
+          uses: unsplash/comment-on-pr@master
+          with:
+            msg: "Trigger Absent"
+            check_for_duplicate_msg: false
