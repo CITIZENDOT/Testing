@@ -7,6 +7,7 @@ on:
 jobs:
   env:
     BUILD_DOCS: "false"
+    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   job_1:
     runs-on: ubuntu-latest
     steps:
@@ -18,18 +19,15 @@ jobs:
           trigger: "AppajiC"
           reaction: rocket
         if: steps.check.outputs.triggered == 'true'
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        env:          
           BUILD_DOCS: "true"
   job_2:
     name: Sample_Comment
     runs-on: ubuntu-latest
     steps:
       - uses: unsplash/comment-on-pr@master
-
       - name: Comment PR
-        env:
-            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: "echo ${env.BUILD_DOCS}"
         if: env.BUILD_DOCS == 'true':
         with:
           msg: "Your comment has AppajiC word"
