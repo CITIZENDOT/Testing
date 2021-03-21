@@ -20,7 +20,7 @@ jobs:
       - uses: unsplash/comment-on-pr@master
         name: comment PR
         env:
-            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         - with:
           msg: "Trigger Present"
           check_for_duplicate_msg: false  # OPTIONAL 
