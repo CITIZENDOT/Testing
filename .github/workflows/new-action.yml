@@ -21,12 +21,10 @@ jobs:
         name: comment PR
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
         - with:
           msg: "Trigger Present"
           check_for_duplicate_msg: false  # OPTIONAL 
         if : steps.check.outputs.triggered == 'true'
-        
         - with:
           msg: "Trigger Absent"
           check_for_duplicate_msg: false  # OPTIONAL 
