@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: khan/pull-request-comment-trigger@master
-
       - name: Trigger
         id: check
         with:
@@ -25,7 +24,6 @@ jobs:
     name: Sample_Comment
     runs-on: ubuntu-latest
     steps:
-      - uses: unsplash/comment-on-pr@master
       - name: Comment PR
         run: "echo ${env.BUILD_DOCS}"
         # if: env.BUILD_DOCS == 'true':
