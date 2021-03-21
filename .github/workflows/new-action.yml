@@ -23,10 +23,8 @@ jobs:
         env:
             GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
+          - if : steps.check.outputs.triggered == 'true'
           msg: "Trigger Present"
-          check_for_duplicate_msg: false  # OPTIONAL 
-        if : steps.check.outputs.triggered == 'true'
-        with:
+          - if : steps.check.outputs.triggered != 'true'
           msg: "Trigger Absent"
           check_for_duplicate_msg: false  # OPTIONAL 
-        if : steps.check.outputs.triggered == 'true'
