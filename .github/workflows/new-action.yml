@@ -5,32 +5,30 @@ on:
     types: [opened]
 
 jobs:
-  env:
-    BUILD_DOCS: "false"
-    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  job_1:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger
-        uses: khan/pull-request-comment-trigger@master
+      - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
           trigger: "AppajiC"
           reaction: rocket
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run:
+        # Generally Anything here runs if below condition satisfies.
+        # I want to run another job here, which uses actions/checkout@v2 action
         if: steps.check.outputs.triggered == 'true'
-        env:          
-          BUILD_DOCS: "true"
-  job_2:
-    name: Sample_Comment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Comment PR
-        run: "echo ${env.BUILD_DOCS}"
-        # if: env.BUILD_DOCS == 'true':
-        # with:
-        #   msg: "Your comment has AppajiC word"
-        #   check_for_duplicate_msg: false
-        # if: env.BUILD_DOCS != 'true':
-        # with:
-        #   msg: "Your comment doesn't have AppajiC word"
-        #   check_for_duplicate_msg: false
+      - uses: unsplash/comment-on-pr@master
+        name: comment PR
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if : steps.check.outputs.triggered == 'true'
+          with:
+            msg: "Trigger Present"
+            check_for_duplicate_msg: false  # OPTIONAL 
+        if : steps.check.outputs.triggered != 'true'
+          with:
+            msg: "Trigger Absent"
+            check_for_duplicate_msg: false  # OPTIONAL 
+
