@@ -15,10 +15,6 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run:
-        # Generally Anything here runs if below condition satisfies.
-        # I want to run another job here, which uses actions/checkout@v2 action
-        if: steps.check.outputs.triggered == 'true'
       - uses: unsplash/comment-on-pr@master
         name: comment PR
         env:
