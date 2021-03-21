@@ -28,11 +28,11 @@ jobs:
       - uses: unsplash/comment-on-pr@master
       - name: Comment PR
         run: "echo ${env.BUILD_DOCS}"
-        if: env.BUILD_DOCS == 'true':
-        with:
-          msg: "Your comment has AppajiC word"
-          check_for_duplicate_msg: false
-        if: env.BUILD_DOCS != 'true':
-        with:
-          msg: "Your comment doesn't have AppajiC word"
-          check_for_duplicate_msg: false
+        # if: env.BUILD_DOCS == 'true':
+        # with:
+        #   msg: "Your comment has AppajiC word"
+        #   check_for_duplicate_msg: false
+        # if: env.BUILD_DOCS != 'true':
+        # with:
+        #   msg: "Your comment doesn't have AppajiC word"
+        #   check_for_duplicate_msg: false
