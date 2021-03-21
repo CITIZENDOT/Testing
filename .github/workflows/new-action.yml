@@ -10,8 +10,9 @@ jobs:
   job_1:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger's with AppajiC
-      uses: khan/pull-request-comment-trigger@master
+      - uses: khan/pull-request-comment-trigger@master
+
+      - name: Trigger
         id: check
         with:
           trigger: "AppajiC"
@@ -21,18 +22,19 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           BUILD_DOCS: "true"
   job_2:
-    name: Sample-Comment
+    name: Sample_Comment
     runs-on: ubuntu-latest
     steps:
+      - uses: unsplash/comment-on-pr@master
+
       - name: Comment PR
-      uses: unsplash/comment-on-pr@master
-      env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      if: ${{env.BUILD_DOCS}} == 'true':
-      with:
-        msg: "Your comment has AppajiC word"
-        check_for_duplicate_msg: false
-      if: ${{env.BUILD_DOCS}} != 'true':
-      with:
-        msg: "Your comment doesn't have AppajiC word"
-        check_for_duplicate_msg: false
+        env:
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        if: ${{env.BUILD_DOCS}} == 'true':
+        with:
+          msg: "Your comment has AppajiC word"
+          check_for_duplicate_msg: false
+        if: ${{env.BUILD_DOCS}} != 'true':
+        with:
+          msg: "Your comment doesn't have AppajiC word"
+          check_for_duplicate_msg: false
