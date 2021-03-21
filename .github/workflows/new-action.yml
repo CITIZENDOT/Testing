@@ -11,8 +11,8 @@ jobs:
   job_1:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@master
       - name: Trigger
+        uses: khan/pull-request-comment-trigger@master
         id: check
         with:
           trigger: "AppajiC"
