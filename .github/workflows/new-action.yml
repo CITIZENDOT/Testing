@@ -3,31 +3,36 @@ name: Testing GH Actions
 on:
   pull_request:
     types: [opened]
-  issue_comment:
-    types: [created]
 
 jobs:
-  deploy:
+  env:
+    BUILD_DOCS: "false"
+  job_1:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@master
+      - name: Trigger's with AppajiC
+      uses: khan/pull-request-comment-trigger@master
         id: check
         with:
           trigger: "AppajiC"
           reaction: rocket
+        if: steps.check.outputs.triggered == 'true'
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      - run: "echo Found it!"
-        if: steps.check.outputs.triggered == 'true'
-  job_1:
-    name: Add 3 and 7
+          BUILD_DOCS: "true"
+  job_2:
+    name: Sample-Comment
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: |
-          expr 3 + 7 > math-homework.txt
-      - name: Upload math result for job 1
-        uses: actions/upload-artifact@v2
-        with:
-          name: homework
-          path: math-homework.txt
+      - name: Comment PR
+      uses: unsplash/comment-on-pr@master
+      env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      if: ${{env.BUILD_DOCS}} == 'true':
+      with:
+        msg: "Your comment has AppajiC word"
+        check_for_duplicate_msg: false
+      if: ${{env.BUILD_DOCS}} != 'true':
+      with:
+        msg: "Your comment doesn't have AppajiC word"
+        check_for_duplicate_msg: false
